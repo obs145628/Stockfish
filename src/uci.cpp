@@ -236,6 +236,13 @@ void UCI::loop(int argc, char* argv[]) {
       else if (token == "bench") bench(pos, is, states);
       else if (token == "d")     sync_cout << pos << sync_endl;
       else if (token == "eval")  sync_cout << Eval::trace(pos) << sync_endl;
+
+
+      // Custom commands
+      else if (token == "xeval") cmd_xeval(pos);
+      else if (token == "xevalmat") cmd_xevalmat(pos);
+      
+
       else
           sync_cout << "Unknown command: " << cmd << sync_endl;
 
@@ -313,4 +320,20 @@ Move UCI::to_move(const Position& pos, string& str) {
           return m;
 
   return MOVE_NONE;
+}
+
+
+void UCI::cmd_xeval(const Position& pos)
+{
+    (void) pos;
+    auto val = static_cast<int>(Eval::evaluate(pos));
+    std::cout << val << std::endl;
+}
+
+void UCI::cmd_xevalmat(const Position& pos)
+{
+    (void) pos;
+    auto score = pos.psq_score();
+    auto val = static_cast<int>(mg_value(score));
+    std::cout << val << std::endl;
 }

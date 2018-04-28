@@ -75,6 +75,11 @@ std::string move(Move m, bool chess960);
 std::string pv(const Position& pos, Depth depth, Value alpha, Value beta);
 Move to_move(const Position& pos, std::string& str);
 
+
+void cmd_xeval(const Position& pos);
+void cmd_xevalmat(const Position& pos);
+
+
 } // namespace UCI
 
 extern UCI::OptionsMap Options;
