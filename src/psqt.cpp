@@ -22,6 +22,8 @@
 
 #include "types.h"
 
+#include "obs.h"
+
 Value PieceValue[PHASE_NB][PIECE_NB] = {
   { VALUE_ZERO, PawnValueMg, KnightValueMg, BishopValueMg, RookValueMg, QueenValueMg },
   { VALUE_ZERO, PawnValueEg, KnightValueEg, BishopValueEg, RookValueEg, QueenValueEg }
@@ -120,7 +122,25 @@ void init() {
           psq[ pc][ s] = score + Bonus[pc][rank_of(s)][f];
           psq[~pc][~s] = -psq[pc][s];
       }
+
   }
+
+
+  for (Piece pc = B_PAWN; pc <= B_KING; ++pc)
+  {
+      for (std::size_t i = 0; i < 8; ++i)
+      {
+	  for (std::size_t j = 0;  j < 8; ++j)
+	  {
+	      auto val = psq[pc][i * 8 + j];
+	      obs::out << "(" << mg_value(val) << ", " << eg_value(val) << ") ";
+	  }
+	  obs::out << "\n";
+      }
+      obs::out << "\n\n\n";
+  }
+
+  
 }
 
 } // namespace PSQT
